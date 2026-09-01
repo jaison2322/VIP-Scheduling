@@ -112,6 +112,177 @@
   --safe-area-bottom: env(safe-area-inset-bottom, 0px);
 }
 
+/* ─── Themes ────────────────────────────────────────────────────────────────── */
+
+/* 1. Executive Platinum Light Theme */
+:root[data-theme="light"],
+[data-theme="light"] {
+  --color-bg-primary: #f5f7fc;
+  --color-bg-secondary: #eaf0f9;
+  --color-bg-tertiary: #dce5f5;
+  --color-bg-card: rgba(255, 255, 255, 0.88);
+  --color-bg-card-hover: rgba(255, 255, 255, 0.98);
+  --color-bg-elevated: #ffffff;
+
+  --color-gold: #b3821a;
+  --color-gold-light: #cb9626;
+  --color-gold-dark: #8c640e;
+  --color-gold-muted: rgba(179, 130, 26, 0.12);
+  --color-gold-glow: rgba(179, 130, 26, 0.2);
+
+  --color-text-primary: #0a1120;
+  --color-text-secondary: #3b4b66;
+  --color-text-muted: #64748b;
+  --color-text-inverse: #ffffff;
+
+  --glass-bg: rgba(255, 255, 255, 0.82);
+  --glass-border: rgba(15, 23, 42, 0.09);
+  --glass-border-light: rgba(15, 23, 42, 0.16);
+
+  --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.05);
+  --shadow-md: 0 4px 12px rgba(0, 0, 0, 0.07);
+  --shadow-lg: 0 8px 24px rgba(0, 0, 0, 0.09);
+  --shadow-xl: 0 16px 40px rgba(0, 0, 0, 0.11);
+}
+
+[data-theme="light"] .bottom-nav {
+  background: rgba(255, 255, 255, 0.92) !important;
+  border-top: 1px solid rgba(15, 23, 42, 0.08) !important;
+  box-shadow: 0 -4px 20px rgba(0, 0, 0, 0.04) !important;
+}
+
+[data-theme="light"] .nav-item {
+  color: #64748b !important;
+}
+
+[data-theme="light"] .nav-item.active {
+  color: #b3821a !important;
+}
+
+[data-theme="light"] .top-bar {
+  background: rgba(245, 247, 252, 0.92) !important;
+  border-bottom: 1px solid rgba(15, 23, 42, 0.08) !important;
+}
+
+[data-theme="light"] .top-bar-title {
+  color: #0a1120 !important;
+}
+
+[data-theme="light"] .top-bar-back {
+  background: rgba(15, 23, 42, 0.05) !important;
+  color: #0a1120 !important;
+}
+
+[data-theme="light"] .glass-card {
+  background: rgba(255, 255, 255, 0.88) !important;
+  border-color: rgba(15, 23, 42, 0.08) !important;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.04) !important;
+}
+
+[data-theme="light"] .glass-card-interactive:hover {
+  background: rgba(255, 255, 255, 0.98) !important;
+  border-color: rgba(179, 130, 26, 0.3) !important;
+}
+
+[data-theme="light"] .glass-card-gold {
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0.95), rgba(245, 238, 222, 0.6)) !important;
+  border-color: rgba(179, 130, 26, 0.3) !important;
+}
+
+[data-theme="light"] .stat-card {
+  background: rgba(255, 255, 255, 0.9) !important;
+  border-color: rgba(15, 23, 42, 0.08) !important;
+}
+
+[data-theme="light"] .input,
+[data-theme="light"] .select,
+[data-theme="light"] .textarea {
+  background: #ffffff !important;
+  border-color: rgba(15, 23, 42, 0.15) !important;
+  color: #0a1120 !important;
+}
+
+[data-theme="light"] .input::placeholder,
+[data-theme="light"] .textarea::placeholder {
+  color: #94a3b8 !important;
+}
+
+[data-theme="light"] .search-bar {
+  background: rgba(255, 255, 255, 0.95) !important;
+  border-color: rgba(15, 23, 42, 0.12) !important;
+}
+
+[data-theme="light"] .search-bar input {
+  color: #0a1120 !important;
+}
+
+[data-theme="light"] .auth-card {
+  background: rgba(255, 255, 255, 0.92) !important;
+  border-color: rgba(179, 130, 26, 0.25) !important;
+  box-shadow: 0 16px 40px rgba(0, 0, 0, 0.08), 0 0 30px rgba(179, 130, 26, 0.1) !important;
+}
+
+[data-theme="light"] .auth-segmented-tabs {
+  background: rgba(234, 240, 249, 0.95) !important;
+  border-color: rgba(15, 23, 42, 0.08) !important;
+}
+
+[data-theme="light"] .pin-key {
+  background: rgba(255, 255, 255, 0.9) !important;
+  border-color: rgba(15, 23, 42, 0.1) !important;
+  color: #0a1120 !important;
+}
+
+[data-theme="light"] .modal-content,
+[data-theme="light"] .modal {
+  background: #ffffff !important;
+  color: #0a1120 !important;
+  border-color: rgba(15, 23, 42, 0.1) !important;
+}
+
+[data-theme="light"] .badge-gold {
+  background: rgba(179, 130, 26, 0.12) !important;
+  color: #8c640e !important;
+  border-color: rgba(179, 130, 26, 0.3) !important;
+}
+
+/* 2. Royal Obsidian Onyx (Pure Black) */
+:root[data-theme="onyx"],
+[data-theme="onyx"] {
+  --color-bg-primary: #000000;
+  --color-bg-secondary: #080808;
+  --color-bg-tertiary: #121212;
+  --color-bg-card: rgba(18, 18, 18, 0.85);
+  --color-bg-card-hover: rgba(28, 28, 28, 0.92);
+  --color-bg-elevated: #161616;
+
+  --color-gold: #e5b352;
+  --color-gold-light: #f7d885;
+  --color-gold-dark: #bd8e33;
+
+  --glass-bg: rgba(14, 14, 14, 0.82);
+  --glass-border: rgba(255, 255, 255, 0.08);
+  --glass-border-light: rgba(255, 255, 255, 0.16);
+}
+
+/* 3. Royal Sapphire Blue */
+:root[data-theme="sapphire"],
+[data-theme="sapphire"] {
+  --color-bg-primary: #040916;
+  --color-bg-secondary: #0a1329;
+  --color-bg-tertiary: #101e40;
+  --color-bg-card: rgba(16, 30, 64, 0.7);
+  --color-bg-card-hover: rgba(22, 42, 90, 0.8);
+  --color-bg-elevated: rgba(24, 46, 96, 0.85);
+
+  --color-gold: #d8ad56;
+  --color-gold-light: #fade8c;
+
+  --glass-bg: rgba(12, 24, 52, 0.7);
+  --glass-border: rgba(96, 165, 250, 0.15);
+  --glass-border-light: rgba(96, 165, 250, 0.25);
+}
+
 /* ─── Reset & Base ──────────────────────────────────────────────────────────── */
 *,
 *::before,
@@ -788,6 +959,12 @@ h4 { font-size: var(--text-lg); }
   box-shadow: var(--shadow-glow);
 }
 
+.nav-scan-btn.active {
+  box-shadow: 0 0 25px rgba(212, 168, 83, 0.65), 0 4px 20px rgba(0, 0, 0, 0.5);
+  border-color: var(--color-gold-light);
+  transform: scale(1.06);
+}
+
 .nav-scan-btn:active {
   transform: scale(0.95);
 }
@@ -1020,24 +1197,46 @@ h4 { font-size: var(--text-lg); }
 .modal-overlay {
   position: fixed;
   inset: 0;
-  background: rgba(0, 0, 0, 0.6);
-  backdrop-filter: blur(8px);
-  z-index: 200;
+  background: rgba(0, 0, 0, 0.78);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  z-index: 9999;
   display: flex;
   align-items: flex-end;
   justify-content: center;
+  padding: 0;
+}
+
+.modal-overlay.modal-centered {
+  align-items: center;
   padding: var(--space-4);
 }
 
 .modal-content {
   background: var(--color-bg-secondary);
   border: 1px solid var(--glass-border-light);
-  border-radius: var(--radius-xl) var(--radius-xl) 0 0;
+  border-radius: var(--radius-2xl) var(--radius-2xl) 0 0;
   padding: var(--space-6);
+  padding-bottom: max(var(--space-8), calc(var(--safe-area-bottom) + 24px));
   width: 100%;
   max-width: var(--max-width);
-  max-height: 85vh;
+  max-height: 90vh;
   overflow-y: auto;
+  box-shadow: 0 -10px 40px rgba(0, 0, 0, 0.6);
+  position: relative;
+  z-index: 10000;
+}
+
+.modal-dialog {
+  background: var(--color-bg-secondary);
+  border: 1px solid var(--glass-border-light);
+  border-radius: var(--radius-xl);
+  padding: var(--space-6);
+  width: 100%;
+  max-width: 400px;
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.8), 0 0 30px rgba(0, 0, 0, 0.5);
+  position: relative;
+  z-index: 10000;
 }
 
 .modal-handle {
@@ -1410,27 +1609,143 @@ h4 { font-size: var(--text-lg); }
   animation: fadeIn 0.6s ease-out 0.5s backwards;
 }
 
-/* ─── Login Screen ──────────────────────────────────────────────────────────── */
+/* ─── Auth / Login & Register Screen ───────────────────────────────────────── */
+.auth-wrapper {
+  min-height: 100dvh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: var(--space-6) var(--space-4);
+  position: relative;
+  overflow-y: auto;
+}
+
+.auth-ambient-glow {
+  position: absolute;
+  width: 320px;
+  height: 320px;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(212, 168, 83, 0.12) 0%, rgba(212, 168, 83, 0) 70%);
+  top: 15%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  pointer-events: none;
+  z-index: 0;
+}
+
+.auth-card {
+  position: relative;
+  z-index: 1;
+  width: 100%;
+  max-width: 400px;
+  background: rgba(15, 23, 42, 0.7);
+  backdrop-filter: blur(var(--glass-blur-heavy));
+  -webkit-backdrop-filter: blur(var(--glass-blur-heavy));
+  border: 1px solid rgba(212, 168, 83, 0.2);
+  border-radius: var(--radius-2xl);
+  padding: var(--space-6) var(--space-5);
+  box-shadow: 0 16px 40px rgba(0, 0, 0, 0.6), 0 0 30px rgba(212, 168, 83, 0.08);
+}
+
+.auth-header {
+  text-align: center;
+  margin-bottom: var(--space-5);
+}
+
+.auth-logo-badge {
+  width: 60px;
+  height: 60px;
+  border-radius: 18px;
+  background: linear-gradient(135deg, var(--color-gold-light), var(--color-gold-dark));
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--color-text-inverse);
+  margin: 0 auto var(--space-3);
+  box-shadow: 0 4px 20px rgba(212, 168, 83, 0.35);
+  transition: transform var(--transition-fast);
+}
+
+.auth-logo-badge:hover {
+  transform: scale(1.05);
+}
+
+.auth-title {
+  font-family: var(--font-heading);
+  font-size: var(--text-xl);
+  font-weight: 700;
+  color: var(--color-text-primary);
+  letter-spacing: -0.01em;
+  margin-bottom: var(--space-1);
+}
+
+.auth-subtitle {
+  font-size: var(--text-xs);
+  color: var(--color-text-muted);
+  letter-spacing: 0.02em;
+}
+
+.auth-segmented-tabs {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 6px;
+  background: rgba(8, 14, 28, 0.8);
+  border: 1px solid var(--glass-border);
+  padding: 4px;
+  border-radius: var(--radius-xl);
+  margin-bottom: var(--space-5);
+}
+
+.auth-tab-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-2);
+  padding: 10px 14px;
+  border-radius: var(--radius-lg);
+  font-family: var(--font-heading);
+  font-size: var(--text-sm);
+  font-weight: 600;
+  color: var(--color-text-secondary);
+  background: transparent;
+  border: 1px solid transparent;
+  cursor: pointer;
+  transition: all var(--transition-fast);
+}
+
+.auth-tab-btn:hover:not(.active) {
+  color: var(--color-text-primary);
+  background: rgba(255, 255, 255, 0.04);
+}
+
+.auth-tab-btn.active {
+  background: linear-gradient(135deg, rgba(212, 168, 83, 0.22), rgba(212, 168, 83, 0.08));
+  border-color: rgba(212, 168, 83, 0.45);
+  color: var(--color-gold-light);
+  box-shadow: 0 2px 10px rgba(212, 168, 83, 0.15);
+}
+
 .pin-grid {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
   gap: var(--space-3);
-  max-width: 280px;
+  max-width: 270px;
   margin: 0 auto;
 }
 
 .pin-key {
-  width: 72px;
-  height: 72px;
+  width: 68px;
+  height: 68px;
   border-radius: var(--radius-lg);
   display: flex;
   align-items: center;
   justify-content: center;
   font-family: var(--font-heading);
-  font-size: var(--text-2xl);
+  font-size: var(--text-xl);
   font-weight: 600;
   color: var(--color-text-primary);
-  background: rgba(15, 23, 42, 0.4);
+  background: rgba(15, 23, 42, 0.5);
   border: 1px solid var(--glass-border);
   cursor: pointer;
   transition: all var(--transition-fast);
@@ -1439,35 +1754,84 @@ h4 { font-size: var(--text-lg); }
 }
 
 .pin-key:hover {
-  background: rgba(15, 23, 42, 0.6);
-  border-color: var(--glass-border-light);
+  background: rgba(212, 168, 83, 0.12);
+  border-color: rgba(212, 168, 83, 0.3);
+  color: var(--color-gold-light);
 }
 
 .pin-key:active {
-  transform: scale(0.93);
-  background: rgba(212, 168, 83, 0.1);
-  border-color: rgba(212, 168, 83, 0.3);
+  transform: scale(0.92);
+  background: rgba(212, 168, 83, 0.2);
+  border-color: var(--color-gold);
 }
 
 .pin-dots {
   display: flex;
   gap: var(--space-4);
   justify-content: center;
-  margin-bottom: var(--space-8);
+  margin-bottom: var(--space-6);
 }
 
 .pin-dot {
   width: 14px;
   height: 14px;
   border-radius: 50%;
-  border: 2px solid rgba(148, 163, 184, 0.3);
+  border: 2px solid rgba(148, 163, 184, 0.35);
   transition: all var(--transition-fast);
 }
 
 .pin-dot.filled {
   background: var(--color-gold);
   border-color: var(--color-gold);
-  box-shadow: 0 0 8px rgba(212, 168, 83, 0.3);
+  box-shadow: 0 0 10px rgba(212, 168, 83, 0.5);
+  transform: scale(1.1);
+}
+
+.role-select-cards {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--space-2);
+  margin-bottom: var(--space-4);
+}
+
+.role-select-card {
+  padding: var(--space-3);
+  border-radius: var(--radius-lg);
+  background: rgba(15, 23, 42, 0.5);
+  border: 1px solid var(--glass-border);
+  text-align: center;
+  cursor: pointer;
+  transition: all var(--transition-fast);
+}
+
+.role-select-card:hover {
+  border-color: var(--glass-border-light);
+  background: rgba(20, 30, 55, 0.6);
+}
+
+.role-select-card.active {
+  background: linear-gradient(135deg, rgba(212, 168, 83, 0.15), rgba(212, 168, 83, 0.04));
+  border-color: rgba(212, 168, 83, 0.5);
+  box-shadow: 0 0 16px rgba(212, 168, 83, 0.12);
+}
+
+.role-select-card-icon {
+  font-size: 1.35rem;
+  margin-bottom: 4px;
+}
+
+.role-select-card-title {
+  font-family: var(--font-heading);
+  font-weight: 700;
+  font-size: var(--text-xs);
+  color: var(--color-text-primary);
+  margin-bottom: 2px;
+}
+
+.role-select-card-desc {
+  font-size: 0.65rem;
+  color: var(--color-text-muted);
+  line-height: 1.2;
 }
 
 /* ─── AI Processing Screen ──────────────────────────────────────────────────── */

@@ -1,3 +1,4 @@
+import { useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import { useAppStore } from '../store/useAppStore';
 import { ArrowLeft, Shield } from 'lucide-react';
@@ -16,7 +17,13 @@ const PERMISSION_LABELS: Record<PermissionKey, { label: string; desc: string }> 
 export default function PermissionManagementScreen() {
   const { id } = useParams<{ id: string }>();
   const navigate = useNavigate();
-  const { privilegedUsers, updatePrivilegedUser, addActivityLog } = useAppStore();
+  const { privilegedUsers, isVIP, updatePrivilegedUser, addActivityLog } = useAppStore();
+
+  useEffect(() => {
+    if (!isVIP) {
+      navigate('/settings', { replace: true });
+    }
+  }, [isVIP, navigate]);
 
   const user = privilegedUsers.find((u) => u.id === id);
   if (!user) {

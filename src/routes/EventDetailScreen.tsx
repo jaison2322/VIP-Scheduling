@@ -1,8 +1,9 @@
+import { useState } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import { useAppStore } from '../store/useAppStore';
 import {
   ArrowLeft, Calendar, Clock, MapPin, Sparkles, AlertTriangle,
-  History, Gift, User, Edit3, CheckCircle2,
+  History, Gift, User, Edit3, CheckCircle2, Trash2,
 } from 'lucide-react';
 import {
   formatFullDate, formatTime, formatDate, getEventTypeIcon, getEventTypeLabel,
@@ -13,7 +14,21 @@ import { getRelationshipHistory, getGiftHistory, detectScheduleConflicts } from 
 export default function EventDetailScreen() {
   const { id } = useParams<{ id: string }>();
   const navigate = useNavigate();
-  const { invitations, people, familyEvents, schedule, updateInvitationStatus } = useAppStore();
+  const {
+    invitations,
+    people,
+    familyEvents,
+    schedule,
+    updateInvitationStatus,
+    removeInvitation,
+    isVIP,
+    currentPrivilegedUser,
+    addActivityLog,
+  } = useAppStore();
+
+  const [showDeleteModal, setShowDeleteModal] = useState(false);
+
+  const canManage = isVIP || currentPrivilegedUser?.permissions?.canEditEvents !== false;
 
   const invitation = invitations.find((i) => i.id === id);
   if (!invitation) {
@@ -32,6 +47,19 @@ export default function EventDetailScreen() {
   const giftHist = person ? getGiftHistory(person.id, familyEvents) : [];
   const conflicts = detectScheduleConflicts(invitation.date, invitation.time, schedule, invitations.filter((i) => i.id !== invitation.id));
 
+  const handleDelete = () => {
+    removeInvitation(invitation.id);
+    addActivityLog({
+      userId: isVIP ? 'vip' : currentPrivilegedUser?.id || 'staff',
+      userName: isVIP ? 'VIP Principal' : currentPrivilegedUser?.name || 'Staff User',
+      action: `deleted invitation "${invitation.nickname || invitation.title}"`,
+      entityType: 'invitation',
+      entityId: invitation.id,
+      entityName: invitation.nickname || invitation.title,
+    });
+    navigate('/upcoming', { replace: true });
+  };
+
   return (
     <div className="screen-no-nav" style={{ paddingBottom: invitation.status === 'pending' ? '120px' : 'var(--space-6)' }}>
       {/* Header */}
@@ -40,7 +68,18 @@ export default function EventDetailScreen() {
           <ArrowLeft size={18} />
         </button>
         <span className="top-bar-title">Event Details</span>
-        <div style={{ width: '36px' }} />
+        {canManage ? (
+          <button
+            className="btn btn-sm btn-ghost text-danger"
+            style={{ padding: '6px', color: 'var(--color-danger)' }}
+            onClick={() => setShowDeleteModal(true)}
+            title="Delete Invitation"
+          >
+            <Trash2 size={16} />
+          </button>
+        ) : (
+          <div style={{ width: '36px' }} />
+        )}
       </div>
 
       {/* Main Card */}
@@ -186,6 +225,41 @@ export default function EventDetailScreen() {
           <button className="btn btn-ignore" onClick={() => { updateInvitationStatus(invitation.id, 'ignored'); navigate(-1); }}>
             ✕ IGNORE
           </button>
+        </div>
+      )}
+
+      {/* Delete Confirmation Modal */}
+      {showDeleteModal && (
+        <div className="modal-overlay modal-centered" onClick={() => setShowDeleteModal(false)}>
+          <div className="modal-dialog animate-scale-in text-center" onClick={(e) => e.stopPropagation()}>
+            <div
+              style={{
+                width: '48px',
+                height: '48px',
+                borderRadius: '50%',
+                background: 'rgba(239, 68, 68, 0.15)',
+                color: 'var(--color-danger)',
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+                margin: '0 auto var(--space-3)',
+              }}
+            >
+              <Trash2 size={24} />
+            </div>
+            <h3 style={{ marginBottom: 'var(--space-1)' }}>Delete Invitation?</h3>
+            <p className="text-xs text-secondary mb-4">
+              Are you sure you want to remove "{invitation.nickname || invitation.title}"? This action cannot be undone.
+            </p>
+            <div className="flex gap-2">
+              <button className="btn btn-ghost flex-1" onClick={() => setShowDeleteModal(false)}>
+                Cancel
+              </button>
+              <button className="btn btn-danger flex-1" onClick={handleDelete}>
+                Delete
+              </button>
+            </div>
+          </div>
         </div>
       )}
     </div>

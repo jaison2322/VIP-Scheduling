@@ -40,9 +40,29 @@ export type EventType =
 
 // ─── Core Entities ───────────────────────────────────────────────────────────
 
+export interface UserAccount {
+  username: string; // Primary key in database
+  passwordHash: string;
+  name: string;
+  role: 'vip' | 'staff';
+  staffTitle?: string;
+  phone?: string;
+  email?: string;
+  pin?: string;
+  avatar?: string;
+  permissions?: Record<PermissionKey, boolean>;
+  createdAt: string;
+  updatedAt?: string;
+  lastLogin?: string;
+}
+
 export interface VIPUser {
   id: string;
+  username?: string;
+  passwordHash?: string;
   name: string;
+  phone?: string;
+  email?: string;
   pin: string;
   avatar?: string;
   createdAt: string;
@@ -50,9 +70,13 @@ export interface VIPUser {
 
 export interface PrivilegedUser {
   id: string;
+  username?: string;
+  passwordHash?: string;
   name: string;
   role: string;
   pin: string;
+  phone?: string;
+  email?: string;
   permissions: Record<PermissionKey, boolean>;
   addedBy: string;
   addedAt: string;
@@ -113,6 +137,7 @@ export interface GuestRecord {
   id: string;
   personId: string;
   personName: string;
+  relationship?: RelationshipType;
   attendance: 'attended' | 'invited_not_attended' | 'unknown';
   gift?: string;
   giftDescription?: string;

@@ -1,6 +1,6 @@
 import { useState, useRef, type ChangeEvent } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { Camera, Upload, Image, ArrowLeft, Sparkles } from 'lucide-react';
+import { Camera, Upload, Image, ArrowLeft, Sparkles, PenLine } from 'lucide-react';
 
 export default function ScanInvitationScreen() {
   const navigate = useNavigate();
@@ -31,7 +31,7 @@ export default function ScanInvitationScreen() {
   };
 
   return (
-    <div className="screen-no-nav flex flex-col" style={{ minHeight: '100dvh' }}>
+    <div className="screen flex flex-col" style={{ minHeight: '100dvh' }}>
       {/* Header */}
       <div className="top-bar">
         <button className="top-bar-back" onClick={() => navigate(-1)}>
@@ -87,22 +87,29 @@ export default function ScanInvitationScreen() {
               </button>
             </div>
 
-            {/* Use Demo */}
-            <div style={{ marginTop: 'var(--space-4)' }}>
+            {/* Manual Entry Option */}
+            <div className="w-full" style={{ maxWidth: '340px', marginTop: 'var(--space-1)' }}>
               <button
-                className="btn btn-ghost"
-                onClick={() => {
-                  sessionStorage.setItem('scan-image', 'demo');
-                  navigate('/ai-processing');
+                type="button"
+                className="btn btn-outline w-full"
+                style={{
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                  gap: '8px',
+                  borderColor: 'rgba(212, 168, 83, 0.35)',
+                  background: 'rgba(15, 23, 42, 0.4)',
+                  padding: '12px',
                 }}
+                onClick={() => navigate('/add-invitation')}
               >
-                <Sparkles size={16} />
-                Use Demo Invitation
+                <PenLine size={16} className="text-gold" />
+                <span>Add Invitation Manually</span>
               </button>
             </div>
 
             <p className="text-muted text-xs text-center" style={{ maxWidth: '280px', marginTop: 'var(--space-2)' }}>
-              AI will automatically extract event details, check your relationships, and suggest a priority.
+              AI can automatically extract details from photos, or you can enter event details manually.
             </p>
           </>
         ) : (

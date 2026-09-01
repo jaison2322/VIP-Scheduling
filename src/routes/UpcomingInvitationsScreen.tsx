@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useAppStore } from '../store/useAppStore';
-import { Calendar, Clock, MapPin, Search } from 'lucide-react';
+import { Calendar, Clock, MapPin, Search, Plus } from 'lucide-react';
 import { formatDate, formatTime, getEventTypeIcon } from '../utils/formatters';
 import type { InvitationStatus } from '../types';
 
@@ -33,11 +33,21 @@ export default function UpcomingInvitationsScreen() {
 
   return (
     <div className="screen">
-      <div className="screen-header">
-        <h2>Invitations</h2>
-        <p className="text-sm text-secondary" style={{ marginTop: '4px' }}>
-          {invitations.length} total invitations
-        </p>
+      <div className="screen-header flex items-center justify-between">
+        <div>
+          <h2>Invitations</h2>
+          <p className="text-sm text-secondary" style={{ marginTop: '4px' }}>
+            {invitations.length} total invitations
+          </p>
+        </div>
+        <button
+          className="btn btn-sm btn-gold"
+          style={{ display: 'flex', alignItems: 'center', gap: '4px', padding: '6px 12px' }}
+          onClick={() => navigate('/add-invitation')}
+        >
+          <Plus size={16} />
+          <span>Add</span>
+        </button>
       </div>
 
       {/* Search */}
@@ -129,10 +139,26 @@ export default function UpcomingInvitationsScreen() {
             <div className="empty-state-icon">
               <Calendar size={28} />
             </div>
-            <div className="empty-state-title">No Invitations</div>
+            <div className="empty-state-title">No Invitations Yet</div>
             <div className="empty-state-text">
-              {search ? 'No results matching your search.' : 'No invitations in this category.'}
+              {search ? 'No results matching your search.' : 'Add your first invitation manually or scan an invitation card.'}
             </div>
+            {!search && (
+              <div className="flex gap-2 mt-4" style={{ justifyContent: 'center' }}>
+                <button
+                  className="btn btn-sm btn-gold"
+                  onClick={() => navigate('/add-invitation')}
+                >
+                  <Plus size={14} /> Add Manually
+                </button>
+                <button
+                  className="btn btn-sm btn-outline"
+                  onClick={() => navigate('/scan')}
+                >
+                  Scan Card
+                </button>
+              </div>
+            )}
           </div>
         )}
       </div>

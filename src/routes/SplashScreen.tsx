@@ -8,12 +8,16 @@ export default function SplashScreen() {
   useEffect(() => {
     const timer = setTimeout(() => {
       navigate('/login', { replace: true });
-    }, 2800);
+    }, 2400);
     return () => clearTimeout(timer);
   }, [navigate]);
 
   return (
-    <div className="splash-screen">
+    <div
+      className="splash-screen cursor-pointer"
+      onClick={() => navigate('/login', { replace: true })}
+      title="Tap to continue"
+    >
       {/* Floating particles */}
       <div style={{
         position: 'absolute', inset: 0, overflow: 'hidden', pointerEvents: 'none',

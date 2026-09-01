@@ -10,9 +10,13 @@ import type { Invitation } from '../types';
 export default function DashboardScreen() {
   const navigate = useNavigate();
   const {
-    currentUser, isVIP, invitations, schedule, notifications,
-    activityLogs, people, familyEvents, updateInvitationStatus,
+    currentUser, currentPrivilegedUser, isVIP, invitations, schedule, notifications,
+    activityLogs, people, familyEvents, updateInvitationStatus, isRealtimeActive,
   } = useAppStore();
+
+  const activeUser = isVIP ? currentUser : currentPrivilegedUser;
+  const activeUserName = activeUser?.name || (isVIP ? 'VIP User' : 'Staff User');
+  const activeUserRole = isVIP ? 'VIP Principal' : (currentPrivilegedUser?.role || 'Personal Assistant');
 
   const pendingInvitations = invitations.filter((i) => i.status === 'pending');
   const confirmedInvitations = invitations.filter((i) => i.status === 'confirmed');
@@ -60,14 +64,44 @@ export default function DashboardScreen() {
       <div className="flex items-center justify-between" style={{ paddingTop: 'var(--space-4)', marginBottom: 'var(--space-5)' }}>
         <div className="flex items-center gap-3">
           <div className="avatar">
-            {currentUser ? getInitials(currentUser.name) : 'VIP'}
+            {getInitials(activeUserName)}
           </div>
           <div>
-            <div style={{ fontSize: 'var(--text-sm)', color: 'var(--color-text-muted)' }}>
-              {isVIP ? 'Welcome back' : 'Logged in as PA'}
+            <div className="flex items-center gap-2">
+              <span style={{ fontSize: 'var(--text-sm)', color: 'var(--color-text-muted)' }}>
+                {isVIP ? 'Welcome back' : `Logged in as ${activeUserRole}`}
+              </span>
+              {/* Realtime Live Pulse Badge */}
+              <span
+                style={{
+                  display: 'inline-flex',
+                  alignItems: 'center',
+                  gap: '4px',
+                  padding: '2px 7px',
+                  borderRadius: '12px',
+                  fontSize: '10px',
+                  fontWeight: 600,
+                  background: isRealtimeActive ? 'rgba(34, 197, 94, 0.15)' : 'rgba(148, 163, 184, 0.12)',
+                  color: isRealtimeActive ? '#4ade80' : 'var(--color-text-muted)',
+                  border: isRealtimeActive ? '1px solid rgba(74, 222, 128, 0.3)' : '1px solid rgba(148, 163, 184, 0.2)',
+                }}
+                title={isRealtimeActive ? 'Supabase Real-Time Live Sync Active' : 'Connecting to Real-Time...'}
+              >
+                <span
+                  style={{
+                    width: '6px',
+                    height: '6px',
+                    borderRadius: '50%',
+                    backgroundColor: isRealtimeActive ? '#22c55e' : '#94a3b8',
+                    boxShadow: isRealtimeActive ? '0 0 6px #22c55e' : 'none',
+                    animation: isRealtimeActive ? 'pulse 2s infinite' : 'none',
+                  }}
+                />
+                {isRealtimeActive ? 'LIVE' : 'SYNC'}
+              </span>
             </div>
             <div className="font-heading font-semibold" style={{ fontSize: 'var(--text-lg)' }}>
-              {currentUser?.name || 'VIP User'}
+              {activeUserName}
             </div>
           </div>
         </div>
@@ -449,9 +483,14 @@ export default function DashboardScreen() {
           <div className="empty-state-text">
             No pending invitations. Scan a new invitation to get started.
           </div>
-          <button className="btn btn-gold mt-6" onClick={() => navigate('/scan')}>
-            Scan Invitation
-          </button>
+          <div className="flex gap-3 mt-6">
+            <button className="btn btn-gold flex-1" onClick={() => navigate('/scan')}>
+              Scan Invitation
+            </button>
+            <button className="btn btn-outline flex-1" onClick={() => navigate('/add-invitation')}>
+              Add Manually
+            </button>
+          </div>
         </div>
       )}
     </div>

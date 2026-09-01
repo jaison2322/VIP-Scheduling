@@ -1,14 +1,16 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useAppStore } from '../store/useAppStore';
-import { Search, Gift } from 'lucide-react';
+import { Search, Gift, Shield } from 'lucide-react';
 import { formatDate, formatCurrency, getGiftCategoryLabel, getInitials } from '../utils/formatters';
 
 export default function GiftHistoryScreen() {
   const navigate = useNavigate();
-  const { familyEvents } = useAppStore();
+  const { familyEvents, isVIP, currentPrivilegedUser } = useAppStore();
   const [search, setSearch] = useState('');
   const [filterCategory, setFilterCategory] = useState<string>('all');
+
+  const canViewGifts = isVIP || currentPrivilegedUser?.permissions?.canViewGiftHistory !== false;
 
   // Flatten all gift records
   const allGifts = familyEvents.flatMap((event) =>
@@ -40,6 +42,25 @@ export default function GiftHistoryScreen() {
 
   const categories = ['all', 'gold', 'silver', 'cash', 'clothing', 'electronics', 'household', 'jewelry', 'other'];
 
+  if (!canViewGifts) {
+    return (
+      <div className="screen-no-nav flex flex-col items-center justify-center text-center" style={{ minHeight: '100dvh', padding: 'var(--space-6)' }}>
+        <div className="auth-card animate-scale-in">
+          <div style={{ color: 'var(--color-danger)', marginBottom: 'var(--space-4)' }}>
+            <Shield size={48} style={{ margin: '0 auto' }} />
+          </div>
+          <h3>Permission Restricted</h3>
+          <p className="text-secondary text-sm" style={{ marginTop: 'var(--space-2)', marginBottom: 'var(--space-6)' }}>
+            Your account role does not have permission to view confidential gift records and valuations. Please contact your VIP Principal.
+          </p>
+          <button className="btn btn-outline w-full" onClick={() => navigate(-1)}>
+            Go Back
+          </button>
+        </div>
+      </div>
+    );
+  }
+
   return (
     <div className="screen">
       <div className="screen-header">
@@ -54,7 +75,7 @@ export default function GiftHistoryScreen() {
         <input placeholder="Search gifts..." value={search} onChange={(e) => setSearch(e.target.value)} />
       </div>
 
-      <div className="overflow-x-auto" style={{ marginBottom: 'var(--space-4)', margin: '0 calc(-1 * var(--space-4)) var(--space-4))', padding: '0 var(--space-4)' }}>
+      <div className="overflow-x-auto" style={{ margin: '0 calc(-1 * var(--space-4)) var(--space-4)', padding: '0 var(--space-4)' }}>
         <div className="tabs" style={{ width: 'max-content' }}>
           {categories.map((cat) => (
             <button key={cat} className={`tab ${filterCategory === cat ? 'active' : ''}`} onClick={() => setFilterCategory(cat)}>

@@ -1,4 +1,4 @@
-import type { ReactNode } from 'react';
+import { useEffect, type ReactNode } from 'react';
 import { BrowserRouter, Routes, Route, Navigate, useLocation, useNavigate } from 'react-router-dom';
 import { useAppStore } from './store/useAppStore';
 import {
@@ -21,6 +21,7 @@ import PastFamilyFunctionsScreen from './routes/PastFamilyFunctionsScreen';
 import PastEventDetailScreen from './routes/PastEventDetailScreen';
 import GiftHistoryScreen from './routes/GiftHistoryScreen';
 import AddEditEventScreen from './routes/AddEditEventScreen';
+import AddInvitationScreen from './routes/AddInvitationScreen';
 import ReminderCenterScreen from './routes/ReminderCenterScreen';
 import ScheduleConflictScreen from './routes/ScheduleConflictScreen';
 import PrivilegedUsersScreen from './routes/PrivilegedUsersScreen';
@@ -29,6 +30,8 @@ import NotificationsScreen from './routes/NotificationsScreen';
 import ActivityHistoryScreen from './routes/ActivityHistoryScreen';
 import SettingsScreen from './routes/SettingsScreen';
 import PeopleListScreen from './routes/PeopleListScreen';
+
+import { realtimeService } from './services/realtimeService';
 
 // ─── Protected Route ────────────────────────────────────────────────────────
 function ProtectedRoute({ children }: { children: ReactNode }) {
@@ -45,7 +48,7 @@ function BottomNavigation() {
 
   // Pages that should NOT show bottom nav
   const hideNavPages = [
-    '/', '/login', '/scan', '/ai-processing', '/extracted-details', '/confirm-ignore',
+    '/', '/login', '/ai-processing', '/extracted-details', '/confirm-ignore', '/add-invitation',
   ];
 
   // Also hide on detail pages
@@ -58,7 +61,9 @@ function BottomNavigation() {
     location.pathname === '/privileged-users' ||
     location.pathname === '/reminders' ||
     location.pathname === '/conflicts' ||
-    location.pathname === '/add-event';
+    location.pathname === '/add-event' ||
+    location.pathname.startsWith('/edit-event/') ||
+    location.pathname === '/add-invitation';
 
   if (hideNavPages.includes(location.pathname) || isDetailPage) return null;
 
@@ -78,7 +83,7 @@ function BottomNavigation() {
         {unread > 0 && <span className="nav-badge">{unread > 9 ? '9+' : unread}</span>}
       </div>
 
-      <div className="nav-scan-btn" onClick={() => navigate('/scan')}>
+      <div className={`nav-scan-btn ${isActive('/scan') ? 'active' : ''}`} onClick={() => navigate('/scan')}>
         <ScanLine size={24} />
       </div>
 
@@ -97,6 +102,16 @@ function BottomNavigation() {
 
 // ─── App ─────────────────────────────────────────────────────────────────────
 export default function App() {
+  const { syncWithSupabase } = useAppStore();
+
+  useEffect(() => {
+    syncWithSupabase();
+    const unsubscribe = realtimeService.subscribeAll();
+    return () => {
+      unsubscribe();
+    };
+  }, [syncWithSupabase]);
+
   return (
     <BrowserRouter>
       <div className="app-container">
@@ -124,6 +139,8 @@ export default function App() {
           <Route path="/past-event/:id" element={<ProtectedRoute><PastEventDetailScreen /></ProtectedRoute>} />
           <Route path="/gifts" element={<ProtectedRoute><GiftHistoryScreen /></ProtectedRoute>} />
           <Route path="/add-event" element={<ProtectedRoute><AddEditEventScreen /></ProtectedRoute>} />
+          <Route path="/edit-event/:id" element={<ProtectedRoute><AddEditEventScreen /></ProtectedRoute>} />
+          <Route path="/add-invitation" element={<ProtectedRoute><AddInvitationScreen /></ProtectedRoute>} />
 
           {/* Protected — Management */}
           <Route path="/conflicts" element={<ProtectedRoute><ScheduleConflictScreen /></ProtectedRoute>} />

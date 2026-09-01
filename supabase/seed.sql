@@ -1,0 +1,6 @@
+-- ==============================================================================
+-- VIP Event Intelligence Database - Seed Data
+-- ==============================================================================
+-- This file is intentionally left clean/empty.
+-- All tables are fresh and ready to receive real user records.
+-- ==============================================================================

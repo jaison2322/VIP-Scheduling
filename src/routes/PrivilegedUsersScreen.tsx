@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useAppStore } from '../store/useAppStore';
 import { ArrowLeft, Plus, UserPlus, Shield, Trash2, Clock } from 'lucide-react';
@@ -8,9 +8,18 @@ import type { PermissionKey } from '../types';
 export default function PrivilegedUsersScreen() {
   const navigate = useNavigate();
   const { privilegedUsers, isVIP, removePrivilegedUser, addPrivilegedUser } = useAppStore();
+
+  useEffect(() => {
+    if (!isVIP) {
+      navigate('/settings', { replace: true });
+    }
+  }, [isVIP, navigate]);
+
   const [showAdd, setShowAdd] = useState(false);
   const [newName, setNewName] = useState('');
   const [newRole, setNewRole] = useState('');
+  const [newPhone, setNewPhone] = useState('');
+  const [newEmail, setNewEmail] = useState('');
   const [newPin, setNewPin] = useState('');
 
   const handleAddUser = () => {
@@ -27,12 +36,16 @@ export default function PrivilegedUsersScreen() {
       name: newName.trim(),
       role: newRole.trim(),
       pin: newPin,
+      phone: newPhone.trim() || undefined,
+      email: newEmail.trim() || undefined,
       permissions: defaultPerms,
       addedBy: 'vip',
     });
     setShowAdd(false);
     setNewName('');
     setNewRole('');
+    setNewPhone('');
+    setNewEmail('');
     setNewPin('');
   };
 
@@ -69,6 +82,11 @@ export default function PrivilegedUsersScreen() {
               <div className="flex-1">
                 <div className="font-semibold text-sm">{user.name}</div>
                 <div className="text-xs text-muted">{user.role}</div>
+                {(user.email || user.phone) && (
+                  <div className="text-xs text-muted mt-1">
+                    {user.email} {user.email && user.phone ? '•' : ''} {user.phone}
+                  </div>
+                )}
                 {user.lastActive && (
                   <div className="flex items-center gap-1 mt-1 text-xs text-muted">
                     <Clock size={10} /> Last active {formatTimeAgo(user.lastActive)}
@@ -117,6 +135,14 @@ export default function PrivilegedUsersScreen() {
                 <div>
                   <label className="label">Role</label>
                   <input className="input" value={newRole} onChange={(e) => setNewRole(e.target.value)} placeholder="e.g., Personal Assistant" />
+                </div>
+                <div>
+                  <label className="label">Phone Number</label>
+                  <input className="input" type="tel" value={newPhone} onChange={(e) => setNewPhone(e.target.value)} placeholder="e.g., +91 98765 43210" />
+                </div>
+                <div>
+                  <label className="label">Email Address</label>
+                  <input className="input" type="email" value={newEmail} onChange={(e) => setNewEmail(e.target.value)} placeholder="e.g., deepa@executive.com" />
                 </div>
                 <div>
                   <label className="label">4-Digit PIN</label>
